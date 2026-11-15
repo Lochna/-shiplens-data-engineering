@@ -5,6 +5,12 @@ import plotly.express as px
 import snowflake.connector
 from cryptography.hazmat.primitives import serialization
 
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from conversational_bi.streamlit_chat import render_ask_shiplens
+
 st.set_page_config(
     page_title="ShipLens | Shipment Intelligence",
     page_icon="📦",
