@@ -1,0 +1,16 @@
+
+version: 2
+
+sources:
+  - name: raw
+    database: SHIPLENS_DB
+    schema: GOOGLE_SHEETS
+    tables:
+      - name: shipments
+        identifier: SHIPMENTS
+
+      - name: tracking_events
+        identifier: TRACKING_EVENTS
+
+      - name: carriers
+        identifier: CARRIERS

@@ -1,0 +1,57 @@
+
+version: 2
+
+models:
+  - name: stg_shipments
+    description: Cleaned shipment records
+    columns:
+      - name: shipment_id
+        data_tests:
+          - not_null
+          - unique
+      - name: carrier_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_carriers')
+                field: carrier_id
+
+  - name: stg_tracking_events
+    description: Cleaned shipment tracking events
+    columns:
+      - name: event_id
+        data_tests:
+          - not_null
+          - unique
+      - name: shipment_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_shipments')
+                field: shipment_id
+
+  - name: stg_carriers
+    description: Cleaned courier reference information
+    columns:
+      - name: carrier_id
+        data_tests:
+          - not_null
+          - unique
+
+  - name: fct_deliveries
+    description: Shipment delivery fact table
+    columns:
+      - name: shipment_id
+        data_tests:
+          - not_null
+          - unique
+
+  - name: carrier_performance
+    description: Courier-level delivery analytics
+    columns:
+      - name: carrier_id
+        data_tests:
+          - not_null
+          - unique
