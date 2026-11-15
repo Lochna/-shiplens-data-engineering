@@ -329,27 +329,16 @@ elif page == "Shipment Explorer":
         "text/csv",
     )
 
+
+
 elif page == "Ask ShipLens AI":
     st.subheader("Ask ShipLens AI")
-    st.caption("Conversational Business Intelligence")
+    st.caption("Conversational Business Intelligence powered by Snowflake")
 
-    st.info(
-        "Snowflake Cortex Analyst integration is being "
-        "developed separately and will be connected here."
-    )
-
-    st.text_input(
-        "Ask a question about shipment performance",
-        placeholder="Which carrier has the best on-time delivery rate?",
-        disabled=True,
-    )
-
-    st.caption(
-        "Planned integration: Streamlit → Cortex Analyst "
-        "→ Snowflake analytics tables"
-    )
+    render_ask_shiplens()
 
 st.divider()
 st.caption(
     "ShipLens | Fivetran • Snowflake • dbt • Airflow • Streamlit"
 )
+
