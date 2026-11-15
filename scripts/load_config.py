@@ -1,11 +1,23 @@
 import os
 from pathlib import Path
 
-CONFIG_DIR = Path("/home/ubuntu/shiplens/config")
+CONFIG_DIR = Path(
+    os.environ.get(
+        "SHIPLENS_CONFIG_DIR",
+        str(Path(__file__).resolve().parents[1] / "config"),
+    )
+)
 
 
 def load_env_file(filename):
     path = CONFIG_DIR / filename
+
+    if not path.is_file():
+        if filename == "integration.env.example":
+            return
+        raise FileNotFoundError(
+            f"Required ShipLens configuration file not found: {path}"
+        )
 
     for line in path.read_text().splitlines():
         line = line.strip()
