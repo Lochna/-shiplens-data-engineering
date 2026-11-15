@@ -1,3 +1,4 @@
+from pathlib import Path
 # ShipLens - Airflow Orchestration DAG
 # Fivetran sync and dbt execution are controlled by safety switches.
 
@@ -8,7 +9,8 @@ import sys
 
 from airflow.sdk import DAG, task
 
-sys.path.insert(0, os.environ.get("SHIPLENS_SCRIPTS_DIR", "/opt/shiplens/scripts"))
+REPO_ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, os.environ.get("SHIPLENS_SCRIPTS_DIR", str(REPO_ROOT / "scripts")))
 
 from load_config import load_fivetran_config
 from fivetran_api import (
@@ -22,7 +24,7 @@ ENABLE_LIVE_SYNC = False
 ENABLE_DBT_EXECUTION = False
 
 DBT_EXECUTABLE = os.environ.get("SHIPLENS_DBT_EXECUTABLE", "dbt")
-DBT_PROJECT_DIR = os.environ.get("SHIPLENS_DBT_PROJECT_DIR", "/opt/shiplens/dbt")
+DBT_PROJECT_DIR = os.environ.get("SHIPLENS_DBT_PROJECT_DIR", str(REPO_ROOT / "dbt"))
 
 
 with DAG(
