@@ -1,4 +1,4 @@
-
+import logging
 import streamlit as st
 import pandas as pd
 import plotly.express as px
@@ -132,6 +132,7 @@ try:
     """)
 
 except Exception:
+    logging.exception("ShipLens Snowflake connection failed")
     st.error(
         "Unable to connect to Snowflake. "
         "Please check the dashboard's Snowflake credentials and permissions."
