@@ -43,7 +43,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-@st.cache_resource
+
 def connect_snowflake():
     settings = st.secrets["snowflake"]
 
@@ -70,17 +70,22 @@ def connect_snowflake():
     )
 
 
+
 @st.cache_data(ttl=300)
 def fetch_data(query):
     conn = connect_snowflake()
-    cursor = conn.cursor()
     try:
-        cursor.execute(query)
-        columns = [column[0].lower() for column in cursor.description]
-        rows = cursor.fetchall()
-        return pd.DataFrame(rows, columns=columns)
+        cursor = conn.cursor()
+        try:
+            cursor.execute(query)
+            columns = [column[0].lower() for column in cursor.description]
+            rows = cursor.fetchall()
+            return pd.DataFrame(rows, columns=columns)
+        finally:
+            cursor.close()
     finally:
-        cursor.close()
+        conn.close()
+
 
 
 st.sidebar.title("📦 ShipLens")
